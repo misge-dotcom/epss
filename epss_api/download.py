@@ -8,7 +8,7 @@ from pandas import json_normalize
 import json
 from collections.abc import Iterable
 from alive_progress import alive_bar
-
+ 
 url = "https://api.first.org/data/v1/epss?percentile-gt=0.95&epss-gt=0.95&pretty=true"
 urlAll = "https://api.first.org/data/v1/epss"
 max_offset = 250000
@@ -50,7 +50,6 @@ def fetch_data(offset):
         print(f"Request for offset {offset} failed with status code: {response.status_code}")
         return None
 
-
 start_time = time.time()
 results = []
 
@@ -61,8 +60,6 @@ with ThreadPoolExecutor(max_workers=max_threads) as executor:
         with alive_bar(total, title="Getting EPSS Data...", ctrl_c=False) as bar:
             
             if data:
-                #token = json.dumps(data[0])
-                #token = token.replace('\'','\"')
                 results.append(data[0])
                 current_offset += offset_increment 
                 bar(current_offset)
