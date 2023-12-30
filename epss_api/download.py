@@ -41,7 +41,7 @@ def fetch_data(offset):
         total = json_data.get("total", [0])
         remoteOffset = json_data.get("offset", [0])
         if int(total) <= int(offset):
-            print("---=== Offsett reached ===---")
+            print("---=== Offsettreached ===---")
             return None, remoteOffset
         if not data:  # Check if data is empty
             return None
