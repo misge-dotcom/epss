@@ -5,7 +5,7 @@ from alive_progress import alive_bar
 
 BASE_URL = "https://api.first.org/data/v1/epss"
 OFFSET_INCREMENT = 100
-THREAD_COUNT = 3
+THREAD_COUNT = 1
 LOCK = threading.Lock()
 
 def validateJSON(jsonData):
@@ -17,6 +17,7 @@ def validateJSON(jsonData):
 
 def fetch_data(offset):
     url = f"{BASE_URL}?percentile-gt=0.95&epss-gt=0.95&pretty=true&offset={offset}"
+    print(url)
     response = requests.get(url)
     data = response.json()
     return data
@@ -34,8 +35,12 @@ def main():
     global all_results
     all_results = []
     threads = []
-
-    with alive_bar(0, bar='blocks') as bar:
+    first_response = fetch_data(0)
+    total_results = first_response.get('total', 0)
+    
+    iterations_needed = (total_results // (OFFSET_INCREMENT)) + 1
+    #print(">>>>>>>>>",total_results, iterations_needed)
+    with alive_bar(iterations_needed, bar='blocks') as bar:
         for i in range(THREAD_COUNT):
             thread = threading.Thread(target=process_data, args=(i * OFFSET_INCREMENT, bar))
             threads.append(thread)
