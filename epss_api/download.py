@@ -41,7 +41,7 @@ def fetch_data(offset):
         total = json_data.get("total", [0])
         remoteOffset = json_data.get("offset", [0])
         if int(total) <= int(offset):
-            print("---=== Offsettreached ===---")
+            print("---=== Offset reached ===---")
             return None, remoteOffset
         if not data:  # Check if data is empty
             return None
@@ -65,7 +65,7 @@ with ThreadPoolExecutor(max_workers=max_threads) as executor:
                 bar(current_offset)
                 # Update the offset using the total count from JSON
             else:
-                print("Empty data received or failed request. Stopping iteration.")
+                print("...Stopping iteration.")
                 break  # Stop the iteration if empty data is received or request fails
 
 # Writing only the 'data' portion to a CSV file
