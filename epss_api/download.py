@@ -10,7 +10,8 @@ from collections.abc import Iterable
 from alive_progress import alive_bar
 
 url = "https://api.first.org/data/v1/epss?percentile-gt=0.95&epss-gt=0.95&pretty=true"
-max_offset = 160000
+urlAll = "https://api.first.org/data/v1/epss"
+max_offset = 250000
 max_threads = 3  # Adjust as needed
 current_offset = 0
 offset_increment = 100
