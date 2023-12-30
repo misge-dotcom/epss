@@ -27,6 +27,13 @@ def flatten(lis):
         else:
             flatList.append(element)
     return flatList
+
+def validateJSON(jsonData):
+    try:
+        json.loads(jsonData)
+    except ValueError as err:
+        return False
+    return True
              
 def fetch_data(offset):
     params = {
@@ -69,8 +76,12 @@ with ThreadPoolExecutor(max_workers=max_threads) as executor:
                 break  # Stop the iteration if empty data is received or request fails
 
 # Writing only the 'data' portion to a CSV file
+
+json_object = json.dumps(flatten(results),indent=4, sort_keys=True)
+print("json data validation is OK:",validateJSON(json_object))
 with open('responses.json', 'w', encoding='utf-8') as csvfile:
-    json.dump(flatten(results),csvfile, indent=4, sort_keys=True)
+    csvfile.write(json_object)
+    #json.dump(flatten(results),csvfile, indent=4, sort_keys=True)
     
 end_time = time.time()
 elapsed_time = end_time - start_time
